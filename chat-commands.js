@@ -9,6 +9,8 @@
  *
  * @license MIT license
  */
+'use strict';
+
 exports.commands = {
 	help: 'about',
 	about: function (target, room, user) {
