@@ -13,9 +13,9 @@ exports.commands = {
 	eval: function (target, room, user, cmd) {
 		if (!target) return Chat.send(room, `Usage: ${Config.cmdchar}${cmd} [target]`);
 		try {
-			Chat.send(room, eval(target));
+			Chat.send(room, `Javascript\n${eval(target)}`);
 		} catch (e) {
-			Chat.send(room, e.stack);
+			Chat.send(room, `Javascript\n${e.stack}`);
 		}
 	},
 	reload: 'hotpatch',
@@ -24,7 +24,7 @@ exports.commands = {
 			Chat.reload();
 			Chat.send(room, 'Chat has been hotpatched successfully.');
 		} catch (e) {
-			Chat.send(room, `Failed to hotpatch chat:\n${e.stack}`);
+			Chat.send(room, `Javascript\nFailed to hotpatch chat:\n${e.stack}`);
 		}
 	},
 };
