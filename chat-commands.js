@@ -18,13 +18,13 @@ exports.commands = {
 		let exec = require('child_process').exec;
 		const cmd = process.platform === 'win32' ? 'ping 8.8.8.8 -n 8' : 'ping -c 8 8.8.8.8.8';
 		exec(cmd, (error, stdout, stderr) => {
-			room.send('```' + stdout + stderr + '```');
+			Chat.send(room, stdout + stderr);
 		});
 	},
 	choose: 'pickrandom',
 	pick: 'pickrandom',
 	pickrandom: function (target, room, user) {
-		if (!target) return room.send('```You have not given options to chose from.```');
+		if (!target) return Chat.send(room, 'You have not given options to chose from.');
 		let optionsArr = target.split(',');
 		let pick = optionsArr[Math.floor(Math.random() * optionsArr.length)].trim();
 		Chat.send(room, `Randomly selected: ${pick}`);
