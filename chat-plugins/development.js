@@ -13,9 +13,9 @@ exports.commands = {
 	eval: function (target, room, user, cmd) {
 		if (!target) return Chat.send(room, `Usage: ${Config.cmdchar}${cmd} [target]`);
 		try {
-			room.send('```' + eval(target) + '```');
+			Chat.send(room, eval(target));
 		} catch (e) {
-			room.send('```' + e.stack + '```');
+			Chat.send(room, e.stack);
 		}
 	},
 	reload: 'hotpatch',
