@@ -1,0 +1,25 @@
+{
+	"name": "discord-bot",
+	"description": "A bot for discord created by panpawn",
+	"version": "0.0.1",
+	"dependencies": {
+		"discord.js": "^11.1.0"
+	},
+	"engines": {
+		"node": ">=6.0.0"
+	},
+	"main": "bot.js",
+	"scripts": {
+		"start": "node bot.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/panpawn/Discord-Bot.git"
+	},
+	"author": {
+		"name": "Jeremy Piemonte",
+		"email": "jeremypiemonte@gmail.com"
+	},
+	"private": true,
+	"license": "MIT"
+}
