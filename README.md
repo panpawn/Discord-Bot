@@ -22,7 +22,7 @@ Shoutouts
 
 A lot of the ideas and whatnot from this actually stem from http://github.com/Zarel/Pokemon-Showdown.  You should check them out, too, their pretty cool.
 
-Credit
+Credits
 ------------------------------------------------------------------------
 
 - panpawn (Owner, Development)
