@@ -64,7 +64,7 @@ bot.on('message', message => {
 
 		const msg = message.content;
 		let tar = (msg.includes(' ') ? msg.substr(msg.indexOf(' ') + 1) : '');
-		Chat.parse(msg, tar, message.author, message.channel);
+		Chat.parse(msg, tar, message.channel, message.author);
 });
 
 bot.on('ready', () => {

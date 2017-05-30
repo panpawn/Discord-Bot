@@ -11,10 +11,10 @@
  */
 exports.commands = {
 	help: 'about',
-	about: function (target, user, room) {
+	about: function (target, room, user) {
 		room.send('```I am a node.js bot powered by discord.js: https://github.com/panpawn/Discord-Bot```');
 	},
-	ping: function (target, user, room) {
+	ping: function (target, room, user) {
 		let exec = require('child_process').exec;
 		exec('ping 8.8.8.8 -n 8', (error, stdout, stderr) => {
 			room.send('```' + stdout + stderr + '```');
@@ -22,7 +22,7 @@ exports.commands = {
 	},
 	choose: 'pickrandom',
 	pick: 'pickrandom',
-	pickrandom: function (target, user, room) {
+	pickrandom: function (target, room, user) {
 		if (!target) return room.send('```You have not given options to chose from.```');
 		let optionsArr = target.split(',');
 		let pick = optionsArr[Math.floor(Math.random() * optionsArr.length)].trim();
@@ -33,7 +33,7 @@ exports.commands = {
 	 * These commands should only be used if the operator knows what their doing.
 	 */
 	js: 'eval',
-	eval: function (target, user, room) {
+	eval: function (target, room, user) {
 		if (!target) return room.send('```Usage: .eval [target]```');
 		try {
 			room.send('```' + eval(target) + '```');
@@ -42,7 +42,7 @@ exports.commands = {
 		}
 	},
 	reload: 'hotpatch',
-	hotpatch: function (target, user, room) {
+	hotpatch: function (target, room, user) {
 		try {
 			Chat.uncache('./chat');
 			Chat = require('./chat');
