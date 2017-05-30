@@ -11,12 +11,13 @@ const commands = Chat.commands = require('./chat-commands').commands;
 
 exports.parse = function (message, target, room, user) {
 	const cmd = message.substr(1, message.length).split(' ')[0].trim();
-	
-	if (message.startsWith(Config.cmdchar) && commands[cmd]) {
+	const cmdId = Chat.toId(cmd);
+
+	if (message.startsWith(Config.cmdchar) && commands[cmdId]) {
 		if (Config.logcmds) console.log(`CMD USED: ${cmd}`);
 		try { // try calling the command
-			if (typeof commands[cmd] === 'string') return commands[commands[cmd]](target, user, room, cmd); // alias
-			commands[cmd](target, user, room, cmd); // runs the command
+			if (typeof commands[cmdId] === 'string') return commands[commands[cmdId]](target, room, user, cmd); // alias
+			commands[cmdId](target, room, user, cmd); // runs the command
 		} catch (e) {
 			Chat.send(room, e.stack); // send user crash message
 		}
