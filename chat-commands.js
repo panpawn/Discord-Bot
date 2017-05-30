@@ -28,12 +28,26 @@ exports.commands = {
 		let pick = optionsArr[Math.floor(Math.random() * optionsArr.length)].trim();
 		room.send('```' + 'Randomly selected: ' + pick + '```');
 	},
+
+	/** Development Commands
+	 * These commands should only be used if the operator knows what their doing.
+	 */
 	eval: function (target, user, room) {
 		if (!target) return room.send('```Usage: .eval [target]```');
 		try {
 			room.send('```' + eval(target) + '```');
 		} catch (e) {
 			room.send('```' + e.stack + '```');
+		}
+	},
+	reload: 'hotpatch',
+	hotpatch: function (target, user, room) {
+		try {
+			Chat.uncache('./chat');
+			Chat = require('./chat');
+			room.send('```Chat has been hotpatched successfully.```');
+		} catch (e) {
+			room.send('```Failed to hotpatch chat:\n' + e.stack + '```');
 		}
 	},
 };

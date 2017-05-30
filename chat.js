@@ -26,6 +26,24 @@ exports.parse = function (message, target, user, room) {
 	}
 };
 
+exports.uncache = function (root) {
+	let uncache = [require.resolve(root)];
+	do {
+		let newuncache = [];
+		for (let i of uncache) {
+			if (require.cache[i]) {
+				newuncache.push.apply(newuncache,
+					require.cache[i].children.map(function (module) {
+						return module.filename;
+					})
+				);
+				delete require.cache[i];
+			}
+		}
+		uncache = newuncache;
+	} while (uncache.length);
+};
+
 exports.toId = function (text) {
 	if (text && text.id) {
 		text = text.id;
