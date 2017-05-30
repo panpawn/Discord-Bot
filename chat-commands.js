@@ -1,7 +1,7 @@
 /**
  * Chat Commands
  *
- * This is where the commands are defined
+ * This is where the main commands are defined
  *
  * TODO:
  * -restart/reload command(s)
