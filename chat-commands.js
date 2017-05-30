@@ -43,8 +43,8 @@ exports.commands = {
 	 * These commands should only be used if the operator knows what their doing.
 	 */
 	js: 'eval',
-	eval: function (target, room, user) {
-		if (!target) return Chat.send(room, 'Usage: .eval [target]');
+	eval: function (target, room, user, cmd) {
+		if (!target) return Chat.send(room, `Usage: ${Config.cmdchar}${cmd} [target]`);
 		try {
 			room.send('```' + eval(target) + '```');
 		} catch (e) {
