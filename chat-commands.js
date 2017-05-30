@@ -12,7 +12,7 @@
 exports.commands = {
 	help: 'about',
 	about: function (target, room, user) {
-		room.send('```I am a node.js bot powered by discord.js: https://github.com/panpawn/Discord-Bot```');
+		Chat.send(room, 'I am a Node.js bot powered by discord.js: https://github.com/panpawn/Discord-Bot');
 	},
 	ping: function (target, room, user) {
 		let exec = require('child_process').exec;
@@ -36,7 +36,7 @@ exports.commands = {
 		if (!target) return room.send('```You have not given options to chose from.```');
 		let optionsArr = target.split(',');
 		let pick = optionsArr[Math.floor(Math.random() * optionsArr.length)].trim();
-		room.send('```' + 'Randomly selected: ' + pick + '```');
+		Chat.send(room, `Randomly selected: ${pick}`);
 	},
 
 	/** Development Commands
@@ -44,7 +44,7 @@ exports.commands = {
 	 */
 	js: 'eval',
 	eval: function (target, room, user) {
-		if (!target) return room.send('```Usage: .eval [target]```');
+		if (!target) return Chat.send(room, 'Usage: .eval [target]');
 		try {
 			room.send('```' + eval(target) + '```');
 		} catch (e) {
@@ -56,9 +56,9 @@ exports.commands = {
 		try {
 			Chat.uncache('./chat');
 			Chat = require('./chat');
-			room.send('```Chat has been hotpatched successfully.```');
+			Chat.send(room, 'Chat has been hotpatched successfully.');
 		} catch (e) {
-			room.send('```Failed to hotpatch chat:\n' + e.stack + '```');
+			Chat.send(room, `Failed to hotpatch chat:\n${e.stack}`);
 		}
 	},
 };

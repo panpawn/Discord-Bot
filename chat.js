@@ -23,6 +23,10 @@ exports.parse = function (message, target, room, user) {
 	}
 };
 
+exports.send = function (room, message) {
+	room.send('```' + message + '```');
+};
+
 exports.uncache = function (root) {
 	let uncache = [require.resolve(root)];
 	do {
