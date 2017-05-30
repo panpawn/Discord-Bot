@@ -6,8 +6,15 @@
  * @license MIT license
  */
 'use strict';
+const fs = require('fs');
+const path = require('path');
 
 const commands = Chat.commands = require('./chat-commands').commands;
+
+for (let file of fs.readdirSync(path.resolve(__dirname, 'chat-plugins'))) {
+	if (file.substr(-3) !== '.js') continue;
+	Object.assign(commands, require('./chat-plugins/' + file).commands);
+}
 
 exports.parse = function (message, target, room, user) {
 	const cmd = message.substr(1, message.length).split(' ')[0].trim();

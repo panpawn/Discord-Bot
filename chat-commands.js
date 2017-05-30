@@ -38,27 +38,4 @@ exports.commands = {
 		let pick = optionsArr[Math.floor(Math.random() * optionsArr.length)].trim();
 		Chat.send(room, `Randomly selected: ${pick}`);
 	},
-
-	/** Development Commands
-	 * These commands should only be used if the operator knows what their doing.
-	 */
-	js: 'eval',
-	eval: function (target, room, user, cmd) {
-		if (!target) return Chat.send(room, `Usage: ${Config.cmdchar}${cmd} [target]`);
-		try {
-			room.send('```' + eval(target) + '```');
-		} catch (e) {
-			room.send('```' + e.stack + '```');
-		}
-	},
-	reload: 'hotpatch',
-	hotpatch: function (target, room, user) {
-		try {
-			Chat.uncache('./chat');
-			Chat = require('./chat');
-			Chat.send(room, 'Chat has been hotpatched successfully.');
-		} catch (e) {
-			Chat.send(room, `Failed to hotpatch chat:\n${e.stack}`);
-		}
-	},
 };
