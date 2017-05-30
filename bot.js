@@ -13,6 +13,13 @@ const fs = require('fs');
 
 const LOGIN = false;
 
+try {
+	eval(`let a = "1, 2"; let [b, ...c] = a.split(','); c;`);
+} catch (e) {
+	console.log("We require Node.js v6 or later; you're using " + process.version);
+	process.exit();
+}
+
 // Check if discord.js is installed
 try {
 		require.resolve('discord.js');
@@ -68,6 +75,6 @@ bot.on('message', message => {
 });
 
 bot.on('ready', () => {
-		const startedMessage = ['Bot has been successfully started.', '✔ dependency discord.js has been installed', '✔ config.js exists', '✔ modern node version in use'];
+		const startedMessage = ['Bot has been successfully started.', '- dependency discord.js has been installed', '- config.js exists', '- modern node version in use'];
 		console.log(startedMessage.join('\n'));
 });
