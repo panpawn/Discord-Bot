@@ -32,6 +32,7 @@ exports.commands = {
 	/** Development Commands
 	 * These commands should only be used if the operator knows what their doing.
 	 */
+	js: 'eval',
 	eval: function (target, user, room) {
 		if (!target) return room.send('```Usage: .eval [target]```');
 		try {
