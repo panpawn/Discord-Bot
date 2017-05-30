@@ -18,7 +18,7 @@ exports.parse = function (message, target, room, user) {
 			if (typeof commands[cmd] === 'string') return commands[commands[cmd]](target, user, room, cmd); // alias
 			commands[cmd](target, user, room, cmd); // runs the command
 		} catch (e) {
-			room.send('```' + e + '```'); // send user crash message
+			Chat.send(room, e.stack); // send user crash message
 		}
 	}
 };
