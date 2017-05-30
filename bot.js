@@ -28,7 +28,7 @@ try {
 		let exec = require('child_process').exec;
 		exec('npm install discord.js', (error, stdout, stderr) => {
 			if (error) console.log(`ERROR while installing discord.js: ${error}`);
-			console.log(stdout + stderr)
+			console.log(stdout + stderr);
 			console.log('discord.js has been installed - run node bot.js again.');
 		});
 }
