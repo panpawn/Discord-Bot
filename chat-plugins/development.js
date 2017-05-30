@@ -10,8 +10,8 @@
 
 exports.commands = {
 	js: 'eval',
-	eval: function (target, room, user, cmd) {
-		if (!target) return Chat.send(room, `Usage: ${Config.cmdchar}${cmd} [target]`);
+	eval: function (target, room, user, cmd, trigger) {
+		if (!target) return Chat.send(room, `Usage: ${trigger}${cmd} [target]`);
 		try {
 			Chat.send(room, `Javascript\n${eval(target)}`);
 		} catch (e) {

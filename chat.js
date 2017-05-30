@@ -19,12 +19,13 @@ for (let file of fs.readdirSync(path.resolve(__dirname, 'chat-plugins'))) {
 exports.parse = function (message, target, room, user) {
 	const cmd = message.substr(1, message.length).split(' ')[0].trim();
 	const cmdId = Chat.toId(cmd);
+	const trigger = Config.cmdchar;
 
 	if (message.startsWith(Config.cmdchar) && commands[cmdId]) {
 		if (Config.logcmds) console.log(`CMD USED: ${cmd}`);
 		try { // try calling the command
-			if (typeof commands[cmdId] === 'string') return commands[commands[cmdId]](target, room, user, cmd); // alias
-			commands[cmdId](target, room, user, cmd); // runs the command
+			if (typeof commands[cmdId] === 'string') return commands[commands[cmdId]](target, room, user, cmd, trigger); // alias
+			commands[cmdId](target, room, user, cmd, trigger); // runs the command
 		} catch (e) {
 			Chat.send(room, e.stack); // send user crash message
 		}
