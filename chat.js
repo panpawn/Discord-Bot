@@ -15,11 +15,8 @@ exports.parse = function (message, target, room, user) {
 	if (message.startsWith(Config.cmdchar) && commands[cmd]) {
 		if (Config.logcmds) console.log(`CMD USED: ${cmd}`);
 		try { // try calling the command
-			if (typeof commands[cmd] === 'string') { // used an alias
-				commands[commands[cmd]](target, room, user);
-			} else {
-				commands[cmd](target, room, user); // runs the command
-			}
+			if (typeof commands[cmd] === 'string') return commands[commands[cmd]](target, user, room); // alias
+			commands[cmd](target, user, room); // runs the command
 		} catch (e) {
 			room.send('```' + e + '```'); // send user crash message
 		}
