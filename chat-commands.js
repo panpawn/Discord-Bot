@@ -16,18 +16,9 @@ exports.commands = {
 	},
 	ping: function (target, room, user) {
 		let exec = require('child_process').exec;
-		let bash = exec(process.platform === 'win32' ? 'ping 8.8.8.8 -n 8' : 'ping -c 8 8.8.8.8.8');
-		let sentMsg, sentData = '';
-		bash.stdout.on('data', function (data) {
-			if (!sentMsg) {
-				room.send("```\n" + data + "```\n").then(function (message) {
-					sentMsg = message;
-					sentData = data;
-				});
-			} else {
-				sentData += data;
-				sentMsg.edit("```\n" + sentData + "\n```");
-			}
+		const cmd = process.platform === 'win32' ? 'ping 8.8.8.8 -n 8' : 'ping -c 8 8.8.8.8.8';
+		exec(cmd, (error, stdout, stderr) => {
+			room.send('```' + stdout + stderr + '```');
 		});
 	},
 	choose: 'pickrandom',
