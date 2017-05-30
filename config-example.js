@@ -5,6 +5,7 @@
  *
  * @license MIT license
  */
+'use strict';
 
 // login - The information required for the bot to login to discord.
 // You have the option of either using a token or the username and
