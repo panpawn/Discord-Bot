@@ -29,4 +29,17 @@ exports.commands = {
 		let pick = optionsArr[Math.floor(Math.random() * optionsArr.length)].trim();
 		Chat.send(room, `Randomly selected: ${pick}`);
 	},
+	uptime: function (target, room, user) {
+		let uptime = process.uptime();
+		let uptimeText;
+		if (uptime > 24 * 60 * 60) {
+			let uptimeDays = Math.floor(uptime / (24 * 60 * 60));
+			uptimeText = uptimeDays + " " + (uptimeDays === 1 ? "day" : "days");
+			let uptimeHours = Math.floor(uptime / (60 * 60)) - uptimeDays * 24;
+			if (uptimeHours) uptimeText += ", " + uptimeHours + " " + (uptimeHours === 1 ? "hour" : "hours");
+		} else {
+			uptimeText = Chat.toDurationString(uptime * 1000);
+		}
+		Chat.send(room, `Uptime: ${uptimeText}`);
+	},
 };

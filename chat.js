@@ -35,7 +35,7 @@ exports.send = function (room, message) {
 	room.send('```' + message + '```');
 };
 
-exports.uncache = function (root) {
+exports.uncache = function (root) { // uncache from: https://github.com/Zarel/Pokemon-Showdown/blob/master/chat.js
 	let uncache = [require.resolve(root)];
 	do {
 		let newuncache = [];
@@ -58,7 +58,19 @@ exports.reload = function () {
 	Chat = require('./chat');
 };
 
-exports.toId = function (text) {
+exports.toDurationString = function (number, options) { // toDurationString from: https://github.com/Zarel/Pokemon-Showdown/blob/master/chat.js
+	const date = new Date(+number);
+	const parts = [date.getUTCFullYear() - 1970, date.getUTCMonth(), date.getUTCDate() - 1, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()];
+	const unitNames = ["second", "minute", "hour", "day", "month", "year"];
+	const positiveIndex = parts.findIndex(elem => elem > 0);
+	if (options && options.hhmmss) {
+		let string = parts.slice(positiveIndex).map(value => value < 10 ? "0" + value : "" + value).join(":");
+		return string.length === 2 ? "00:" + string : string;
+	}
+	return parts.slice(positiveIndex).reverse().map((value, index) => value ? value + " " + unitNames[index] + (value > 1 ? "s" : "") : "").reverse().join(" ").trim();
+};
+
+exports.toId = function (text) { // toId from: https://github.com/Zarel/Pokemon-Showdown/blob/master/sim/dex-data.js
 	if (text && text.id) {
 		text = text.id;
 	} else if (text && text.userid) {
