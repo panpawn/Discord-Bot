@@ -9,7 +9,7 @@
 'use strict';
 
 exports.commands = {
-    js: 'eval',
+	js: 'eval',
 	eval: function (target, room, user, cmd) {
 		if (!target) return Chat.send(room, `Usage: ${Config.cmdchar}${cmd} [target]`);
 		try {
@@ -21,8 +21,7 @@ exports.commands = {
 	reload: 'hotpatch',
 	hotpatch: function (target, room, user) {
 		try {
-			Chat.uncache('./chat');
-			Chat = require('./chat');
+			Chat.reload();
 			Chat.send(room, 'Chat has been hotpatched successfully.');
 		} catch (e) {
 			Chat.send(room, `Failed to hotpatch chat:\n${e.stack}`);

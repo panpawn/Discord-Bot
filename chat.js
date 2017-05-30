@@ -53,6 +53,11 @@ exports.uncache = function (root) {
 	} while (uncache.length);
 };
 
+exports.reload = function () {
+	Chat.uncache('./chat');
+	Chat = require('./chat');
+};
+
 exports.toId = function (text) {
 	if (text && text.id) {
 		text = text.id;
