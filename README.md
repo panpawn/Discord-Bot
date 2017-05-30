@@ -1,5 +1,7 @@
 # Discord-Bot
-This is a Node.js bot for discord that is powered by discord.js
+This is a Node.js bot for Discord that is powered by [discord.js][1]
+
+[1]: https://www.npmjs.com/package/discord.js
 
 Setup
 ------------------------------------------------------------------------
