@@ -19,12 +19,19 @@ Contributing
 
 Feel free to submit any pull requests with any optimizations or additions you see fit.
 
+License
+------------------------------------------------------------------------
+
+Discord-Bot is distributed under the terms of the [MIT License][2].
+
+[2]: https://github.com/panpawn/Discord-Bot/blob/master/LICENSE
+
 Shoutouts
 ------------------------------------------------------------------------
 
-A lot of the ideas and whatnot from this actually stem from [Pokemon-Showdown][2].
+A lot of the ideas and whatnot from this actually stem from [Pokemon-Showdown][3].
 
-[2]: http://github.com/Zarel/Pokemon-Showdown
+[3]: http://github.com/Zarel/Pokemon-Showdown
 
 Credits
 ------------------------------------------------------------------------
