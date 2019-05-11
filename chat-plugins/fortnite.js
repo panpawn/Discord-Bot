@@ -58,6 +58,7 @@ function screenshot(callback) {
 		browser.newPage().then(function (page) {
 			page.setViewport({width: 1920, height: 1080}).then(function () {
 				page.goto(URL.pathToFileURL('./shop.html'), {waitUntil: 'networkidle0'}).then(function () {
+					console.log('loading page');
 					console.timeEnd('load');
 					page.$('body > div > table').then(function (selector) {
 						selector.screenshot({path: 'itemshop.png'}).then(function (img) {
