@@ -11,15 +11,18 @@
 exports.commands = {
 	js: 'eval',
 	eval: function (target, room, user, cmd, trigger) {
+		if (!Chat.isAdmin(user)) return Chat.send(room, "Access denied.");
 		if (!target) return Chat.send(room, `Usage: ${trigger}${cmd} [target]`);
 		try {
-			Chat.send(room, `Javascript\n${eval(target)}`);
+			const result = eval(target);
+			if (target) Chat.send(room, `Javascript\n${result}`);
 		} catch (e) {
 			Chat.send(room, `Javascript\n${e.stack}`);
 		}
 	},
 	reload: 'hotpatch',
 	hotpatch: function (target, room, user) {
+		if (!Chat.isAdmin(user)) return Chat.send(room, "Access denied.");
 		try {
 			Chat.reload();
 			Chat.send(room, 'Chat has been hotpatched successfully.');

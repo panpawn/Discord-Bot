@@ -34,7 +34,7 @@ try {
 }
 
 const Discord = require('discord.js');
-const bot = new Discord.Client();
+global.bot = new Discord.Client();
 
 try {
 		require.resolve('./config');
@@ -47,6 +47,17 @@ try {
 		);
 } finally {
 		global.Config = require('./config');
+}
+
+if (Config.watchConfig) {
+	fs.watchFile(path.resolve(__dirname, 'config.js'), function (curr, prev) {
+		if (curr.mtime <= prev.mtime) return;
+		try {
+			delete require.cache[require.resolve('./config.js')];
+			global.Config = require('./config.js');
+			console.log('Reloaded config.js');
+		} catch (e) {}
+	});
 }
 
 if (Config.login.token) bot.login(Config.login.token, tryLogin);
@@ -66,9 +77,6 @@ global.Chat = {};
 Chat = Object.assign(Chat, require('./chat'));
  
 bot.on('message', message => {
-		//if (Config.admins && !(Config.admins.includes(message.author))) return;
-		if (message.author !== bot.user) return; // user has not specified who can access commands
-
 		const msg = message.content;
 		let tar = (msg.includes(' ') ? msg.substr(msg.indexOf(' ') + 1) : '');
 		Chat.parse(msg, tar, message.channel, message.author);

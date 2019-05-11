@@ -3,7 +3,9 @@
 	"description": "A bot for discord created by panpawn",
 	"version": "0.0.1",
 	"dependencies": {
-		"discord.js": "^11.1.0"
+		"cron": "^1.7.1",
+		"discord.js": "^11.1.0",
+		"puppeteer": "^1.15.0"
 	},
 	"engines": {
 		"node": ">=6.0.0"

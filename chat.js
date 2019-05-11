@@ -22,7 +22,7 @@ exports.parse = function (message, target, room, user) {
 	const trigger = Config.cmdchar;
 
 	if (message.startsWith(Config.cmdchar) && commands[cmdId]) {
-		if (Config.logcmds) console.log(`CMD USED: ${cmd}`);
+		if (Config.logcmds) console.log(`CMD USED: ${message} | user: ${user.username}#${user.discriminator}`);
 		try { // try calling the command
 			if (typeof commands[cmdId] === 'string') return commands[commands[cmdId]](target, room, user, cmd, trigger); // alias
 			commands[cmdId](target, room, user, cmd, trigger); // runs the command
@@ -35,6 +35,10 @@ exports.parse = function (message, target, room, user) {
 exports.send = function (room, message) {
 	room.send('```' + message + '```');
 };
+
+exports.basicSend = function (room, message) {
+	room.send(message);
+}
 
 exports.uncache = function (root) { // uncache from: https://github.com/Zarel/Pokemon-Showdown/blob/master/chat.js
 	let uncache = [require.resolve(root)];
@@ -79,4 +83,8 @@ exports.toId = function (text) { // toId from: https://github.com/Zarel/Pokemon-
 	}
 	if (typeof text !== 'string' && typeof text !== 'number') return '';
 	return ('' + text).toLowerCase().replace(/[^a-z0-9]+/g, '');
+};
+
+exports.isAdmin = function (user) {
+	return Config.admins.includes(user.id);
 };

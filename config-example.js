@@ -21,8 +21,13 @@ exports.cmdchar = '.';
  
 // admins - Users who can have access to the bots commands.
 // WARNING: Some commands, such as eval, can access the computers filesystem.
-// (this doesn't actually work (yet))
 exports.admins = [];
 
 // logcmds - whether or not to log when a command is used or not
 exports.logcmds = false;
+
+// watchConfig - whether or not config.js should be watched for changes or not.
+exports.watchConfig = true;
+
+// fnbrAPI - the API key used for fetching data from https://fnbr.co
+exports.fnbrAPI = '';
