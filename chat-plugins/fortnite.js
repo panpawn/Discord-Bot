@@ -13,11 +13,11 @@ const URL = require('url');
 const fs = require('fs');
 var CronJob = require('cron').CronJob;
 new CronJob('1 20 * * *', function() { // everday at 8:01 EST
-	console.log('job triggered');
+	console.log('item shop posting triggered');
 	bot.channels.forEach(function (channel, id) {
 		console.log('id: ' + id);
 		if (id === '576600954510770176') {
-			console.log('channel found');
+			console.log('found channel');
 			Chat.commands['itemshop'](null, channel, null);
 			return;
 		}
@@ -57,14 +57,10 @@ function screenshot(callback) {
 	puppeteer.launch().then(function (browser) {
 		browser.newPage().then(function (page) {
 			page.setViewport({width: 1920, height: 1080}).then(function () {
-				console.log('loading page');
-				console.time('load');
 				page.goto(URL.pathToFileURL('./shop.html'), {waitUntil: 'networkidle0'}).then(function () {
 					console.timeEnd('load');
-					console.log('page loaded');
 					page.$('body > div > table').then(function (selector) {
 						selector.screenshot({path: 'itemshop.png'}).then(function (img) {
-							console.log('screenshotted');
 							browser.close();
 							return callback(img);
 						});
@@ -78,6 +74,8 @@ function screenshot(callback) {
 exports.commands = {
   	fortnite: 'itemshop',
 	itemshop: function (target, room, user) {
+		const date = new Date();
+		const stamp = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
 		if (!user || Chat.isAdmin(user)) {
 			const options = {
 				host: 'fnbr.co',
@@ -96,7 +94,7 @@ exports.commands = {
 					body += data;
 				});
 				res.on('end', function () {
-					let buff = '<div><table><tr><td valign="top"><table cellspacing="10" style="float: left;"><tr><td colspan="2" style="color: white; text-align: center;"><span style="font-size: 20px; font-weight: bold;">Featured</span></td>';
+					let buff = `<div><table><tr><td colspan="4" style="text-align: center; color: white;"><span style="font-size: 20px; font-weight: bold;">Fortnite Item Shop</span><br />${stamp}</td></tr><tr><td valign="top"><table cellspacing="10" style="float: left;"><tr><td colspan="2" style="color: white; text-align: center;"><span style="font-size: 20px; font-weight: bold;">Featured</span></td>`;
 					let shop = false;
 					try {
 						shop = (JSON.parse(body).data);
@@ -130,7 +128,7 @@ exports.commands = {
 						let marquee = false; // item.name.length > 15;
 						buff += `<td style="font-family: Arial; ${colors[item.rarity].bg} ${colors[item.rarity].border}"><div style="position: relative;"><img src="${item.images.icon}" width="${imageSize}" height="${imageSize}"><div style="text-align: center; position: absolute; bottom: 1px; color: white; background: rgba(0,0,0,.3); width: 100%;"><strong>${marquee ? '<marquee scrollamount="5">' : ''}${item.name}${marquee ? '</marquee>' : ''}</strong><br /><span>${item.priceIconLink ? `<img style="vertical-align:middle" src="${item.priceIconLink}" width="16" height="16">` : ''}${item.price}</span></div></div></td>`;
 					});
-					buff += '</tr></table></td></tr></table></div>';
+					buff += '</tr></table></td></tr><tr><td colspan="4" style="text-align: center; color: white;"><small>Powered by the API from fnbr.co</small></td></tr></table></div>';
 
 					fs.writeFileSync('shop.html', '<html><body bgcolor="#1E1E1E">' + buff + '</bod></html>', 'utf8');
 
