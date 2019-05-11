@@ -62,8 +62,7 @@ function screenshot(callback) {
 				page.goto(URL.pathToFileURL('./shop.html'), {waitUntil: 'networkidle0'}).then(function () {
 					console.timeEnd('load');
 					console.log('page loaded');
-					//page.content().then(console.log);
-					page.$('body > table').then(function (selector) {
+					page.$('body > div > table').then(function (selector) {
 						selector.screenshot({path: 'itemshop.png'}).then(function (img) {
 							console.log('screenshotted');
 							browser.close();
@@ -97,10 +96,9 @@ exports.commands = {
 					body += data;
 				});
 				res.on('end', function () {
-					let buff = '<table class="shop" style="background-color: #1E1E1E;"><tr>';
+					let buff = '<div><table><tr><td valign="top"><table cellspacing="10" style="float: left;"><tr><td colspan="2" style="color: white; text-align: center;"><span style="font-size: 20px; font-weight: bold;">Featured</span></td>';
 					let shop = false;
 					try {
-						//require('fs').writeFileSync('testing.txt', body, 'utf8');
 						shop = (JSON.parse(body).data);
 					} catch (e) {
 						self.send(r, "Could not fetch shop.");
@@ -111,36 +109,34 @@ exports.commands = {
 					const daily = shop.daily;
 					let itemCount = 0;
 					function newRow(count) {
-						if (count === 5 || count === 9 || count === 13 || count === 17 || count === 21 || count === 24 || count === 28 || count === 32 || count === 36 || count === 40) return true;
+						if (count % 2 !== 0) return true;
 						return false;
 					}
 					featured.forEach(item => {
-						++itemCount;
+						itemCount++;
 						if (newRow(itemCount)) {
 							buff += '</tr><tr>';
 						};
 						let marquee = false; // item.name.length > 15;
 						buff += `<td style="font-family: Arial; ${colors[item.rarity].bg} ${colors[item.rarity].border}"><div style="position: relative;"><img src="${item.images.icon}" width="${imageSize}" height="${imageSize}"><div style="text-align: center; position: absolute; bottom: 1px; color: white; background: rgba(0,0,0,.3); width: 100%;"><strong>${marquee ? '<marquee scrollamount="5">' : ''}${item.name}${marquee ? '</marquee>' : ''}</strong><br /><span>${item.priceIconLink ? `<img style="vertical-align:middle" src="${item.priceIconLink}" width="16" height="16">` : ''}${item.price}</span></div></div></td>`;
 					});
+					buff += '</tr></table></td><td valign="top"><table cellspacing="10" style="float: left;"><tr><td colspan="2" style="color: white; text-align: center;"><span style="font-size: 20px; font-weight: bold;">Daily</span></td>';
+					
 					daily.forEach(item => {
-						++itemCount;
+						itemCount++;
 						if (newRow(itemCount)) {
 							buff += '</tr><tr>';
 						};
 						let marquee = false; // item.name.length > 15;
 						buff += `<td style="font-family: Arial; ${colors[item.rarity].bg} ${colors[item.rarity].border}"><div style="position: relative;"><img src="${item.images.icon}" width="${imageSize}" height="${imageSize}"><div style="text-align: center; position: absolute; bottom: 1px; color: white; background: rgba(0,0,0,.3); width: 100%;"><strong>${marquee ? '<marquee scrollamount="5">' : ''}${item.name}${marquee ? '</marquee>' : ''}</strong><br /><span>${item.priceIconLink ? `<img style="vertical-align:middle" src="${item.priceIconLink}" width="16" height="16">` : ''}${item.price}</span></div></div></td>`;
 					});
-					buff += '</tr>';
-					buff += '</table>';
+					buff += '</tr></table></td></tr></table></div>';
 
-					fs.writeFileSync('shop.html', '<html>' + buff + '</html>', 'utf8');
-
-					console.log('path: ' + URL.pathToFileURL('./shop.html'));
+					fs.writeFileSync('shop.html', '<html><body bgcolor="#1E1E1E">' + buff + '</bod></html>', 'utf8');
 
 					screenshot(function (buffer) {
 						room.send("Current Fortnite Item Shop", {files: [{attachment: buffer}]});
 					});
-					// self.send(r, buff);
 				});
 				res.on('error', function (e) {
 					self.send(r, `Crashed while trying to get the shop: ${e.code}`);
