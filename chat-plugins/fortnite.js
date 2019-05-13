@@ -43,10 +43,10 @@ const colors = {
 		bg: 'background: radial-gradient(#b15be2,#4b2483);',
 		border: 'border: 2px solid #e95eff;',
     },
-    marvel: {
-        bg: 'background: radial-gradient(#c53334,#761b1b);',
-        border: 'border: 2px solid #ef3537;',
-    },
+	marvel: {
+		bg: 'background: radial-gradient(#c53334,#761b1b);',
+		border: 'border: 2px solid #ef3537;',
+	},
 	legendary: {
 		bg: 'background: radial-gradient(#d37841,#78371d);',
 		border: 'border: 2px solid #e98d4b;',
@@ -73,6 +73,7 @@ function screenshot(callback) {
 exports.commands = {
   	fortnite: 'itemshop',
 	itemshop: function (target, room, user) {
+		if (!Config.fnbrAPI) return Chat.send(room, "This bot does not have an API key configured to use this command.");
 		const date = new Date();
 		const stamp = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
 		if (!user || Chat.isAdmin(user)) {
@@ -83,7 +84,7 @@ exports.commands = {
 				method: 'GET',
 				headers: {
 					'x-api-key': Config.fnbrAPI,
-			},
+				},
 			};
 			let body = '';
 			const self = Chat;
