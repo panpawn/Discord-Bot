@@ -104,24 +104,27 @@ exports.commands = {
 					if (!shop) return self.send(r, 'oh no, something failed while trying to load the shop');
 					const featured = shop.featured;
 					const daily = shop.daily;
-					let itemCount = 0;
+
 					function newRow(count) {
 						if (count % 2 !== 0) return true;
 						return false;
 					}
+
+					let featuredItemCount = 0;
 					featured.forEach(item => {
-						itemCount++;
-						if (newRow(itemCount)) {
+						featuredItemCount++;
+						if (newRow(featuredItemCount)) {
 							buff += '</tr><tr>';
 						};
 						let marquee = false; // item.name.length > 15;
 						buff += `<td style="font-family: Arial; ${colors[item.rarity].bg} ${colors[item.rarity].border}"><div style="position: relative;"><img src="${item.images.icon}" width="${imageSize}" height="${imageSize}"><div style="text-align: center; position: absolute; bottom: 1px; color: white; background: rgba(0,0,0,.3); width: 100%;"><strong>${marquee ? '<marquee scrollamount="5">' : ''}${item.name}${marquee ? '</marquee>' : ''}</strong><br /><span>${item.priceIconLink ? `<img style="vertical-align:middle" src="${item.priceIconLink}" width="16" height="16">` : ''}${item.price}</span></div></div></td>`;
 					});
 					buff += '</tr></table></td><td valign="top"><table cellspacing="10" style="float: left;"><tr><td colspan="2" style="color: white; text-align: center;"><span style="font-size: 20px; font-weight: bold;">Daily</span></td>';
-					
+
+					let dailyItemCount = 0;
 					daily.forEach(item => {
-						itemCount++;
-						if (newRow(itemCount)) {
+						dailyItemCount++;
+						if (newRow(dailyItemCount)) {
 							buff += '</tr><tr>';
 						};
 						let marquee = false; // item.name.length > 15;
