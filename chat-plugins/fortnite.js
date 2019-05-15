@@ -15,9 +15,8 @@ var CronJob = require('cron').CronJob;
 new CronJob('1 20 * * *', function() { // everday at 8:01 EST
 	console.log('item shop posting triggered');
 	bot.channels.forEach(function (channel, id) {
-		console.log('id: ' + id);
 		if (id === '576600954510770176') {
-			console.log('found channel');
+			console.log('posting item shop...');
 			Chat.commands['itemshop'](null, channel, null);
 			return;
 		}
