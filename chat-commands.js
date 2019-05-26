@@ -17,6 +17,7 @@ exports.commands = {
 		Chat.send(room, 'I am a Node.js bot powered by discord.js: https://github.com/panpawn/Discord-Bot');
 	},
 	ping: function (target, room, user) {
+		if (!Chat.isAdmin(user)) return Chat.send(room, "Access denied.");
 		let exec = require('child_process').exec;
 		const cmd = process.platform === 'win32' ? 'ping 8.8.8.8 -n 8' : 'ping -c 8 8.8.8.8.8';
 		exec(cmd, (error, stdout, stderr) => {
