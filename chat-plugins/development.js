@@ -24,7 +24,7 @@ exports.commands = {
 	hotpatch: function (target, room, user) {
 		if (!Chat.isAdmin(user)) return Chat.send(room, "Access denied.");
 		try {
-			Chat.reload();
+			Tools.reloadChat();
 			Chat.send(room, 'Chat has been hotpatched successfully.');
 		} catch (e) {
 			Chat.send(room, `Javascript\nFailed to hotpatch chat:\n${e.stack}`);

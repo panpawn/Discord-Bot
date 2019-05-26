@@ -73,8 +73,9 @@ function tryLogin (error, token) { // Login check function
 }
 //if (!LOGIN) return; // Stop here if the bot can't login.
 
-global.Chat = {};
-Chat = Object.assign(Chat, require('./chat'));
+global.Chat = require('./chat');
+
+global.Tools = require('./tools');
  
 bot.on('message', message => {
 		const msg = message.content;
