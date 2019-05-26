@@ -14,7 +14,7 @@ exports.commands = {
 	convert: 'conversion',
 	conversion: function (target, room, user, cmd, trigger) {
 		if (!target) return Chat.send(room, `Usage: ${trigger}${cmd} [temp][C/F] - Attempts to convert a given temperature.`);
-		let tarId = Chat.toId(target);
+		let tarId = Tools.toId(target);
 		if (tarId.includes('c')) {
 			let num = tarId.substr(0, tarId.length - 1);
 			if (!Number(num)) return Chat.send(room, 'Invalid number to convert.');
