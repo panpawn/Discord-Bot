@@ -11,17 +11,21 @@ const https = require('https');
 const puppeteer = require('puppeteer');
 const URL = require('url');
 const fs = require('fs');
-var CronJob = require('cron').CronJob;
-new CronJob('1 20 * * *', function() { // everday at 8:01 EST
-	console.log('item shop posting triggered');
-	bot.channels.forEach(function (channel, id) {
-		if (id === '576600954510770176') {
-			console.log('posting item shop...');
-			Chat.commands['itemshop'](null, channel, null);
-			return;
-		}
-	});
-}, null, true, 'America/New_York');
+const CronJob = require('cron').CronJob;
+
+if (!bot.isHotpatched) {
+	new CronJob('1 20 * * *', function() { // everday at 8:01 EST
+		console.log('item shop posting triggered');
+		bot.channels.forEach(function (channel, id) {
+			if (id === '576600954510770176') {
+				console.log('posting item shop...');
+				Chat.commands['itemshop'](null, channel, null);
+				console.log('item shop posted')
+				return;
+			}
+		});
+	}, null, true, 'America/New_York');
+}
 
 const imageSize = 130;
 

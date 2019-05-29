@@ -35,6 +35,7 @@ try {
 
 const Discord = require('discord.js');
 global.bot = new Discord.Client();
+bot.isHotpatched = false;
 
 try {
 		require.resolve('./config');

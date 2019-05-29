@@ -26,6 +26,8 @@ exports.uncache = function (root) { // uncache from: https://github.com/Zarel/Po
 };
 
 exports.reloadChat = function () {
+	bot.isHotpatched = true;
+
 	Tools.uncache('./chat');
 	Chat = require('./chat');
 
