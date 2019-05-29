@@ -10,11 +10,11 @@
 
 const path = require('path');
 const fs = require('fs');
-
-const LOGIN = false;
+let startupMessage = ['Attempting to startup bot...'];
 
 try {
 	eval(`let a = "1, 2"; let [b, ...c] = a.split(','); c;`);
+	startupMessage.push(`- Modern version of Node.js in use (${process.version})`);
 } catch (e) {
 	console.log("We require Node.js v6 or later; you're using " + process.version);
 	process.exit();
@@ -23,6 +23,7 @@ try {
 // Check if discord.js is installed
 try {
 		require.resolve('discord.js');
+		startupMessage.push(`- Discord.js is installed`);
 } catch (e) {
 		console.log('ERROR: discord.js is not installed yet - installing now (running `npm install discord.js`).');
 		let exec = require('child_process').exec;
@@ -39,6 +40,7 @@ bot.isHotpatched = false;
 
 try {
 		require.resolve('./config');
+		startupMessage.push(`- ./config.js exists`);
 } catch (e) { // config.js doesn't exist (yet)
 		if (e.code !== 'MODULE_NOT_FOUND') throw e; // should never happen
 
@@ -61,21 +63,19 @@ if (Config.watchConfig) {
 	});
 }
 
-if (Config.login.token) bot.login(Config.login.token, tryLogin);
-if (Config.login.username && Config.login.password) bot.login(Config.login.username, Config.login.password, tryLogin);
+let loggedIn = false;
+if (Config.login.token) bot.login(Config.login.token).then(loggedIn = true).catch(console.error);
+if (Config.login.username && Config.login.password) bot.login(Config.login.username, Config.login.password, tryLogin).then(loggedIn = true).catch(console.error);
 
-function tryLogin (error, token) { // Login check function
-		if (error) {
-			return console.log(`There was an error logging in: ${error}`);
-		} else {
-			console.log(`Logged in successfully.`);
-			LOGIN = true;
-		}
+if (loggedIn) {
+	startupMessage.push(`- Logged in successfully`);
+} else {
+	startupMessage.push(`- Bot failed to log in`);
+	console.log(startupMessage.join('\n'));
+	return;
 }
-//if (!LOGIN) return; // Stop here if the bot can't login.
 
 global.Chat = require('./chat');
-
 global.Tools = require('./tools');
  
 bot.on('message', message => {
@@ -85,6 +85,6 @@ bot.on('message', message => {
 });
 
 bot.on('ready', () => {
-		const startedMessage = ['Bot has been successfully started.', '- dependency discord.js has been installed', '- config.js exists', '- modern node version in use'];
-		console.log(startedMessage.join('\n'));
+		startupMessage.push('Bot has been sucessfully started!');
+		console.log(startupMessage.join('\n'));
 });
