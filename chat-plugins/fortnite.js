@@ -31,33 +31,6 @@ if (!bot.isHotpatched) {
 
 const imageSize = 130;
 
-const colors = {
-	common: {
-		bg: '#bebebe,#646464',
-		border: '#b1b1b1',
-	},
-	uncommon: {
-		bg: '#60aa3a,#175117',
-		border: '#87e339',
-	},
-	rare: {
-		bg: '#49acf2,#143977',
-		border: '#37d1ff',
-	},
-	epic: {
-		bg: '#b15be2,#4b2483',
-		border: '#e95eff',
-	},
-	marvel: {
-		bg: '#c53334,#761b1b',
-		border: '#ef3537',
-	},
-	legendary: {
-		bg: '#d37841,#78371d',
-		border: '#e98d4b',
-	},
-};
-
 function screenshot(callback) {
 	puppeteer.launch().then(function (browser) {
 		browser.newPage().then(function (page) {
@@ -119,24 +92,20 @@ exports.commands = {
 					let featuredItemCount = 0;
 					featured.forEach(item => {
 						featuredItemCount++;
-						if (newRow(featuredItemCount)) {
-							buff += '</tr><tr>';
-						};
-						buff += `<td style="font-family: Arial; background: radial-gradient(${colors[item.rarity].bg}); border: 2px solid ${colors[item.rarity].border};"><div style="position: relative;"><img src="${item.images.icon}" width="${imageSize}" height="${imageSize}"><div style="text-align: center; position: absolute; bottom: 1px; color: white; background: rgba(0,0,0,.3); width: 100%;"><strong>${item.name}</strong><br /><span>${item.priceIconLink ? `<img style="vertical-align:middle" src="${item.priceIconLink}" width="16" height="16">` : ''}${item.price}</span></div></div></td>`;
+						if (newRow(featuredItemCount)) buff += '</tr><tr>';
+						buff += `<td class="${item.rarity}"><div class="rel"><img src="${item.images.icon}" width="${imageSize}" height="${imageSize}"><div class="tile"><strong>${item.name}</strong><br /><span>${item.priceIconLink ? `<img class="price-icon" src="${item.priceIconLink}" width="16" height="16">` : ''}${item.price}</span></div></div></td>`;
 					});
 					buff += '</tr></table></td><td valign="top"><table cellspacing="10" style="float: left;"><tr><td colspan="2" style="color: white; text-align: center;"><span style="font-size: 20px; font-weight: bold;">Daily</span></td>';
 
 					let dailyItemCount = 0;
 					daily.forEach(item => {
 						dailyItemCount++;
-						if (newRow(dailyItemCount)) {
-							buff += '</tr><tr>';
-						};
-						buff += `<td style="font-family: Arial; background: radial-gradient(${colors[item.rarity].bg}); border: 2px solid${colors[item.rarity].border};"><div style="position: relative;"><img src="${item.images.icon}" width="${imageSize}" height="${imageSize}"><div style="text-align: center; position: absolute; bottom: 1px; color: white; background: rgba(0,0,0,.3); width: 100%;"><strong>${item.name}</strong><br /><span>${item.priceIconLink ? `<img style="vertical-align:middle" src="${item.priceIconLink}" width="16" height="16">` : ''}${item.price}</span></div></div></td>`;
+						if (newRow(dailyItemCount)) buff += '</tr><tr>';
+						buff += `<td class="${item.rarity}"><div class="rel"><img src="${item.images.icon}" width="${imageSize}" height="${imageSize}"><div class="tile"><strong>${item.name}</strong><br /><span>${item.priceIconLink ? `<img class="price-icon" src="${item.priceIconLink}" width="16" height="16">` : ''}${item.price}</span></div></div></td>`;
 					});
 					buff += '</tr></table></td></tr><tr><td colspan="4" style="text-align: center; color: white;"><small>Powered by the API from fnbr.co</small></td></tr></table></div>';
 
-					fs.writeFileSync('shop.html', '<html><body bgcolor="#1E1E1E">' + buff + '</body></html>', 'utf8');
+					fs.writeFileSync('shop.html', `<html><head><link rel="stylesheet" type="text/css" href="fortnite-style.css"></head><body>${buff}</body></html>`, 'utf8');
 
 					screenshot(function (buffer) {
 						room.send("Current Fortnite Item Shop", {files: [{attachment: buffer}]});
