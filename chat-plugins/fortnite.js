@@ -2,6 +2,8 @@
  * Fortnite plugin
  * 
  * This uses FNBR's API to fetch the item shop.
+ * Authors: panpawn, jd4564
+ * API: fnbr.co
  *
  * @license MIT license
  */
@@ -31,28 +33,28 @@ const imageSize = 130;
 
 const colors = {
 	common: {
-		bg: 'background: radial-gradient(#bebebe,#646464);',
-		border: 'border: 2px solid #b1b1b1;;',
+		bg: '#bebebe,#646464',
+		border: '#b1b1b1',
 	},
 	uncommon: {
-		bg: 'background: radial-gradient(#60aa3a,#175117);',
-		border: 'border: 2px solid #87e339;',
+		bg: '#60aa3a,#175117',
+		border: '#87e339',
 	},
 	rare: {
-		bg: 'background: radial-gradient(#49acf2,#143977);',
-		border: 'border: 2px solid #37d1ff;',
+		bg: '#49acf2,#143977',
+		border: '#37d1ff',
 	},
 	epic: {
-		bg: 'background: radial-gradient(#b15be2,#4b2483);',
-		border: 'border: 2px solid #e95eff;',
-    },
+		bg: '#b15be2,#4b2483',
+		border: '#e95eff',
+	},
 	marvel: {
-		bg: 'background: radial-gradient(#c53334,#761b1b);',
-		border: 'border: 2px solid #ef3537;',
+		bg: '#c53334,#761b1b',
+		border: '#ef3537',
 	},
 	legendary: {
-		bg: 'background: radial-gradient(#d37841,#78371d);',
-		border: 'border: 2px solid #e98d4b;',
+		bg: '#d37841,#78371d',
+		border: '#e98d4b',
 	},
 };
 
@@ -120,8 +122,7 @@ exports.commands = {
 						if (newRow(featuredItemCount)) {
 							buff += '</tr><tr>';
 						};
-						let marquee = false; // item.name.length > 15;
-						buff += `<td style="font-family: Arial; ${colors[item.rarity].bg} ${colors[item.rarity].border}"><div style="position: relative;"><img src="${item.images.icon}" width="${imageSize}" height="${imageSize}"><div style="text-align: center; position: absolute; bottom: 1px; color: white; background: rgba(0,0,0,.3); width: 100%;"><strong>${marquee ? '<marquee scrollamount="5">' : ''}${item.name}${marquee ? '</marquee>' : ''}</strong><br /><span>${item.priceIconLink ? `<img style="vertical-align:middle" src="${item.priceIconLink}" width="16" height="16">` : ''}${item.price}</span></div></div></td>`;
+						buff += `<td style="font-family: Arial; background: radial-gradient(${colors[item.rarity].bg}); border: 2px solid ${colors[item.rarity].border};"><div style="position: relative;"><img src="${item.images.icon}" width="${imageSize}" height="${imageSize}"><div style="text-align: center; position: absolute; bottom: 1px; color: white; background: rgba(0,0,0,.3); width: 100%;"><strong>${item.name}</strong><br /><span>${item.priceIconLink ? `<img style="vertical-align:middle" src="${item.priceIconLink}" width="16" height="16">` : ''}${item.price}</span></div></div></td>`;
 					});
 					buff += '</tr></table></td><td valign="top"><table cellspacing="10" style="float: left;"><tr><td colspan="2" style="color: white; text-align: center;"><span style="font-size: 20px; font-weight: bold;">Daily</span></td>';
 
@@ -131,12 +132,11 @@ exports.commands = {
 						if (newRow(dailyItemCount)) {
 							buff += '</tr><tr>';
 						};
-						let marquee = false; // item.name.length > 15;
-						buff += `<td style="font-family: Arial; ${colors[item.rarity].bg} ${colors[item.rarity].border}"><div style="position: relative;"><img src="${item.images.icon}" width="${imageSize}" height="${imageSize}"><div style="text-align: center; position: absolute; bottom: 1px; color: white; background: rgba(0,0,0,.3); width: 100%;"><strong>${marquee ? '<marquee scrollamount="5">' : ''}${item.name}${marquee ? '</marquee>' : ''}</strong><br /><span>${item.priceIconLink ? `<img style="vertical-align:middle" src="${item.priceIconLink}" width="16" height="16">` : ''}${item.price}</span></div></div></td>`;
+						buff += `<td style="font-family: Arial; background: radial-gradient(${colors[item.rarity].bg}); border: 2px solid${colors[item.rarity].border};"><div style="position: relative;"><img src="${item.images.icon}" width="${imageSize}" height="${imageSize}"><div style="text-align: center; position: absolute; bottom: 1px; color: white; background: rgba(0,0,0,.3); width: 100%;"><strong>${item.name}</strong><br /><span>${item.priceIconLink ? `<img style="vertical-align:middle" src="${item.priceIconLink}" width="16" height="16">` : ''}${item.price}</span></div></div></td>`;
 					});
 					buff += '</tr></table></td></tr><tr><td colspan="4" style="text-align: center; color: white;"><small>Powered by the API from fnbr.co</small></td></tr></table></div>';
 
-					fs.writeFileSync('shop.html', '<html><body bgcolor="#1E1E1E">' + buff + '</bod></html>', 'utf8');
+					fs.writeFileSync('shop.html', '<html><body bgcolor="#1E1E1E">' + buff + '</body></html>', 'utf8');
 
 					screenshot(function (buffer) {
 						room.send("Current Fortnite Item Shop", {files: [{attachment: buffer}]});
