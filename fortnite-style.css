@@ -23,6 +23,16 @@
 	background: radial-gradient(#b15be2, #4b2483);
 	border: 2px solid #e95eff;
 }
+.dark {
+	font-family: Arial;
+	background: radial-gradient(#fb22df, #520c6f);
+	border: 2px solid #ff42e7;
+}
+.dc {
+	font-family: Arial;
+	background: radial-gradient(#5475c7, #243461);
+	border: 2px solid #6094ce;
+}
 .marvel {
 	font-family: Arial;
 	background: radial-gradient(#c53334, #761b1b);
