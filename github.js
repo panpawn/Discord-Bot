@@ -10,6 +10,7 @@
  */
 'use strict';
 
+const request = require('request');
 const usernames = require('./github-usernames');
 
 if (!Config.github) return;
@@ -26,6 +27,19 @@ function sendMessage(message) {
 	for (let room of Config.github.rooms) {
 		Chat.basicSend(bot.channels.get(room), message);
 	}
+}
+
+function shorten (url) {
+	return new Promise(function (resolve, reject) {
+		function shortenCallback (error, response, body) {
+			let shortenedUrl = url
+			if (!error && response.headers.location) {
+				shortenedUrl = response.headers.location
+			}
+			return resolve(shortenedUrl);
+		}
+		request.post('https://git.io/', {form: {url: url}}, shortenCallback)
+	});
 }
 
 function getRepo(repo) {
@@ -46,7 +60,7 @@ function getRepo(repo) {
 	return repo;
 }
 
-github.on('push', function push(repo, ref, result) {
+github.on('push', async function push(repo, ref, result) {
 	let url = result.compare;
 	let branch = /[^/]+$/.exec(ref)[0];
 	let message = [];
@@ -58,11 +72,11 @@ github.on('push', function push(repo, ref, result) {
 
 	message.push(`[${repo}] ${username} ${action} ${number} to ${branch}:`);
 
-	result.commits.forEach(function (commit) {
+	await Tools.asyncForEach(result.commits, async function (commit) {
 		const commitMessage = commit.message;
 		const commitUsername = usernames[commit.author.name] || commit.author.name;
 		const commitHash = commit.id.substring(0, 6);
-		const commitUrl = commit.url;
+		const commitUrl = await shorten(commit.url);
 		let shortCommit = /.+/.exec(commitMessage)[0];
 		if (commitMessage !== shortCommit) {
 			shortCommit += '...';
@@ -73,10 +87,10 @@ github.on('push', function push(repo, ref, result) {
 	sendMessage(message.join('\n'));
 });
 
-github.on('pull_request', function pullRequest(repo, ref, result) {
+github.on('pull_request', async function pullRequest(repo, ref, result) {
 	const COOLDOWN = 10 * 60 * 1000;
 	const requestNumber = result.pull_request.number;
-	const url = result.pull_request.html_url;
+	const url = await shorten(result.pull_request.html_url);
 	let action = result.action;
 	const userid = result.sender.login.toLowerCase().replace(/[^a-z0-9]+/g, '');
 	const username = usernames[userid] || userid;

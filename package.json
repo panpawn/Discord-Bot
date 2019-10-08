@@ -6,7 +6,8 @@
 		"cron": "^1.7.1",
 		"discord.js": "^11.1.0",
 		"githubhook": "^1.9.3",
-		"puppeteer": "^1.15.0"
+		"puppeteer": "^1.15.0",
+		"request": "^2.88.0"
 	},
 	"engines": {
 		"node": ">=6.0.0"

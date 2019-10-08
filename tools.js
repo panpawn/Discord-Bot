@@ -56,3 +56,9 @@ exports.toId = function (text) { // toId from: https://github.com/Zarel/Pokemon-
 	if (typeof text !== 'string' && typeof text !== 'number') return '';
 	return ('' + text).toLowerCase().replace(/[^a-z0-9]+/g, '');
 };
+
+exports.asyncForEach = async function (array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
