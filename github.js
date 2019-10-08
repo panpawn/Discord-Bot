@@ -52,7 +52,7 @@ github.on('push', function push(repo, ref, result) {
 	const userid = result.pusher.name.toLowerCase().replace(/[^a-z0-9]+/g, '');
 	const username = usernames[userid] || userid;
 	const action = result.forced ? 'force-pushed' : 'pushed';
-	const number = result.commit.length === 1 ? `1 new commit` : `${result.commit.length} new commits`;
+	const number = result.commits.length === 1 ? `1 new commit` : `${result.commit.length} new commits`;
 
 	message.push(`[${repo}] ${username} ${action} ${number} to ${branch}:`);
 
