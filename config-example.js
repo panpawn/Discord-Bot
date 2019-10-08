@@ -31,3 +31,11 @@ exports.watchConfig = true;
 
 // fnbrAPI - the API key used for fetching data from https://fnbr.co
 exports.fnbrAPI = '';
+
+// github - for tracking changes of GitHub repositories. 'rooms' is an array of
+// all rooms (by id) that should be notified of these changes.
+exports.github = {
+	port: '',
+	secret: '',
+	rooms: [''],
+};

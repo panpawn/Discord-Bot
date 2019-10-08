@@ -5,6 +5,7 @@
 	"dependencies": {
 		"cron": "^1.7.1",
 		"discord.js": "^11.1.0",
+		"githubhook": "^1.9.3",
 		"puppeteer": "^1.15.0"
 	},
 	"engines": {

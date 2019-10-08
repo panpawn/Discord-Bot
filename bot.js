@@ -77,6 +77,8 @@ if (loggedIn) {
 
 global.Chat = require('./chat');
 global.Tools = require('./tools');
+
+require('./github');
  
 bot.on('message', message => {
 		const msg = message.content;
