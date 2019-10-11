@@ -4,13 +4,13 @@
 
 .common {
 	font-family: Arial;
-	 background: radial-gradient(#bebebe, #646464);
-	 border: 2px solid #b1b1b1;
+	background: radial-gradient(#bebebe, #646464);
+	border: 2px solid #b1b1b1;
 }
 .uncommon {
 	font-family: Arial;
-	 background: radial-gradient(#60aa3a, #175117);
-	 border: 2px solid #87e339;
+	background: radial-gradient(#60aa3a, #175117);
+	border: 2px solid #87e339;
 	
 }
 .rare {
