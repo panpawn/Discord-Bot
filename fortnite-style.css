@@ -48,6 +48,11 @@
 	background: radial-gradient(#36b7b7, #256b6b);
 	border: 2px solid #52e0e0;	
 }
+.slurp {
+	font-family: Arial;
+	background: radial-gradient(#29f1a3, #12a9a4);
+	border: 2px solid #53f0ff;
+}
 .legendary {
 	font-family: Arial;
 	background: radial-gradient(#d37841, #78371d);
