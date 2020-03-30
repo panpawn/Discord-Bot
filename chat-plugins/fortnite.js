@@ -16,7 +16,7 @@ const fs = require('fs');
 const CronJob = require('cron').CronJob;
 
 if (!bot.isHotpatched) {
-	new CronJob('1 20 * * *', function() { // everday at 8:01 EST
+	new CronJob('2 20 * * *', function() { // everday at 8:01 EST
 		console.log('item shop posting triggered; posting item shop...');
 		Chat.commands['itemshop'](null, bot.channels.get('576600954510770176'), null);
 		console.log('item shop posted');
@@ -27,7 +27,7 @@ if (!bot.isHotpatched) {
 const imageSize = 130;
 
 function screenshot(callback) {
-	puppeteer.launch().then(function (browser) {
+	puppeteer.launch({args: ['--no-sandbox']}).then(function (browser) {
 		browser.newPage().then(function (page) {
 			page.setViewport({width: 1920, height: 1080}).then(function () {
 				page.goto(URL.pathToFileURL('./shop.html'), {waitUntil: 'networkidle0'}).then(function () {
